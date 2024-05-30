@@ -26,3 +26,10 @@ Hvis du vil få bygd dette hjemme:
              (Plast rør dersom du trenger rekkevidde)
              En switch (Finnes i Microbit:Tinker kit)
              Breadboard (Ikke nødvendig)
+
+
+Hvordan alt teknisk blir satt opp:  https://github.com/himskii/Vannings-prosjekt/assets/127395019/7f2cb3e2-2098-440f-9a40-8405b5cb84b5
+
+
+
+
