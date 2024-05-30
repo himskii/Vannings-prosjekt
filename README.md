@@ -13,5 +13,16 @@ Manuellt:
         En switch som skrur pumpen på mens den er holdt inne.
         Switchen får relay til å lukke kretsen mellom kraft kilden og pumpen, og aktiverer da pumpen.
 
-Det er lagt til pauser mellon relay aktivering og deaktivering når betingelsene er oppnåd. Det blir bare korte intervaller av vanning for å unngå og overvanne planten.
+Det er lagt til pauser mellon relay aktivering og deaktivering når betingelsene er oppnåd. Dette fører til korte intervaller av vanning for å unngå å overvanne planten.
 
+Hvis du vil få bygd dette hjemme:
+     Utstyr nødvendig:
+             
+             Raspberry PI (Model 4 blir brukt i min)
+             Minst 20 jumper cables (Kan trenge flere dersom du vil ha mer rekkevidde)
+             En fuktighetssensor (Finnes i Microbit:Tinker kit)
+             Relay
+             En vann pumpe
+             (Plast rør dersom du trenger rekkevidde)
+             En switch (Finnes i Microbit:Tinker kit)
+             Breadboard (Ikke nødvendig)
