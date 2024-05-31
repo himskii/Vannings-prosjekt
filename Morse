@@ -1,0 +1,197 @@
+from adafruit_ssd1306 import SSD1306_I2C
+import board
+import digitalio
+import busio
+from datetime import timedelta
+from time import sleep
+import time
+import threading
+import RPi.GPIO as GPIO
+import math
+from PIL import Image, ImageDraw, ImageFont
+
+
+
+
+GPIO.setmode(GPIO.BCM)
+
+led = 5
+led2 = 19
+speaker = 6
+switch = 27
+switch2 = 26
+GPIO.setup(switch, GPIO.IN)
+GPIO.setup(led, GPIO.OUT)
+GPIO.setup(speaker, GPIO.OUT)
+GPIO.setup(switch2, GPIO.IN)
+GPIO.setup(led2, GPIO.OUT)
+count=0
+
+
+
+i2c = busio.I2C(board.SCL, board.SDA)
+
+display = SSD1306_I2C(128, 32, i2c)
+
+display.fill(0)
+display.show()
+
+image = Image.new("1", (display.width,display.height))
+
+draw = ImageDraw.Draw(image)
+
+font = ImageFont.load_default()
+
+
+
+countDwn = 0
+
+p = GPIO.PWM(6,50)
+letterStart = 42
+letterHeight = -2
+start = 20
+height = -1
+
+ID = []
+
+
+slow = 15
+medium = 10
+fast = 5
+veryfast = 3
+
+letter = ""
+while True:
+
+
+
+
+
+    if (countDwn * 100) > (fast) or len(ID) >= 6:
+        fID = ''.join(ID)
+        if fID == "12":
+            letter = "A"
+        elif fID == "2111":
+            letter = "B"
+        elif fID == "2121":
+            letter = "C"
+        elif fID == "211":
+            letter = "D"
+        elif fID == "1":
+            letter = "E"
+        elif fID == "1121":
+            letter = "F"
+        elif fID == "221":
+            letter = "G"
+        elif fID == "1111":
+            letter = "H"
+        elif fID == "11":
+            letter = "I"
+        elif fID == "1222":
+            letter = "J"
+        elif fID == "212":
+            letter = "K"
+        elif fID == "1211":
+            letter = "L"
+        elif fID == "22":
+            letter = "M"
+        elif fID == "21":
+            letter = "N"
+        elif fID == "222":
+            letter = "O"
+        elif fID == "1221":
+            letter = "P"
+        elif fID == "2212":
+            letter = "Q"
+        elif fID == "121":
+            letter = "R"
+        elif fID == "111":
+            letter = "S"
+        elif fID == "2":
+            letter = "T"
+        elif fID == "112":
+            letter = "U"
+        elif fID == "1112":
+            letter = "V"
+        elif fID == "122":
+            letter = "W"
+        elif fID == "2112":
+            letter = "X"
+        elif fID == "2122":
+            letter = "Y"
+        elif fID == "2211":
+            letter = "Z"
+        elif fID == "121212":
+            letter = "."
+        elif fID == "221122":
+            letter = ","
+        elif fID == "112211":
+            letter = "?"
+        elif fID == "12222":
+            letter = "1"
+        elif fID == "11222":
+            letter = "2"
+        elif fID == "11122":
+            letter = "3"
+        elif fID == "11112":
+            letter = "4"
+        elif fID == "11111":
+            letter = "5"
+        elif fID == "21111":
+            letter = "6"
+        elif fID == "22111":
+            letter = "7"
+        elif fID == "22211":
+            letter = "8"
+        elif fID == "22221":
+            letter = "9"
+        elif fID == "22222":
+            letter = "0"
+        elif fID == "22212":
+            letter = "!"
+        elif fID == "13":
+            letter = "'"
+        elif fID == "33":
+            height = height + 10
+            letter = " "
+            start = 18
+        elif fID == "3":
+            letter = " "
+            start + 5
+
+        draw.text((start,height), (letter), font=font, fill=255)
+        ID = []
+        start = start + 8
+
+
+
+    while GPIO.input(switch)==False:
+        count = (count + 0.001)
+        sleep(0.005)
+        GPIO.output(led, True)
+        GPIO.output(speaker, True)
+        p.start(70)
+        countDwn = 0
+
+        # On
+
+    while GPIO.input(switch)==True:
+        GPIO.output(led, False)
+        count = count * 100
+        count = round(count)
+        if count < 3 and count > 0:
+            #draw.text((start,height), ".", font=font, fill=255)
+            ID.append('1')
+        if count >= 3 and count < 15:
+            #draw.text((start,height), "_", font=font, fill=255)
+            ID.append('2')
+        if count  > 15:
+            ID.append('3')
+
+        p.stop()
+        countDwn = (countDwn + 0.01)
+        count = 0
+        print(ID)
+        display.image(image)
+        display.show()
+        # Off
